@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<script>
+
+		function typr_depr(text) {
+			var current = "";
+			var running = true;
+
+			var wait = 1000;	//in milis
+
+			var i = 0;
+			var last_i = new Date().getTime();
+			var now = last_i;
+			var stop = text.length;
+			while(running) {
+				now = new Date().getTime();
+				if(now > last_i + wait) {
+					//An iteration (i)
+					var c = text.charAt(i);
+					current += c;
+					document.getElementById('p-1').innerHTML += c;
+					i++;
+				}
+
+				if(i > stop -1) {
+					running - false;
+					return;
+				}
+			}
+		}
+
+		function anim_showText(target, message, index, interval) {
+			//Do I have to do anything?
+			if(index < message.length) {
+
+				//Update the text
+				document.getElementById(target).innerHTML += message[index];
+				//Update the index
+				index++;
+				//Set a timeout for the interval
+				setTimeout(
+					//A standard, recursive function
+					function () {
+						showText(target, message, index, interval);
+					}, interval
+				);
+
+			}
+		}
+
+		/**
+		* THIS IS THE GOOD ONE
+		*/
+		function anim_typr(target, message, interval, rdmf_percentage) {
+			var rdmf = (rdmf_percentage / 100);
+			var rdm = rdm_range(1-rdmf, 1+rdmf);
+			var curr_interval = interval * rdm;
+
+			var index = arguments[4];
+			if(index == undefined) {index = 0;}
+
+			//Do I have to do anything?
+			if(index < message.length) {
+
+				//Update the text
+				document.getElementById(target).innerHTML += message[index];
+				//Update the index
+				index++;
+				//Set a timeout for the interval
+				setTimeout(
+					//A standard, recursive function
+					function () {
+						anim_typr(target, message, interval, rdmf_percentage, index);
+					}, curr_interval
+				);
+
+			}
+		}
+
+		function rdm_range(min, max) {
+			var delta = max - min;
+			return min + (Math.random() * delta);
+		}
+
+		</script>
+	</head>
+
+	<body>
+		<button id="button-1" onclick="anim_typr('p-1', 'This is slowly typed', 500, 33)">1</button>
+		<button id="button-2" onclick="anim_typr('p-2', 'This is fast and irregular', 200, 100)">2</button>
+
+		<button id="button-3" onclick="anim_typr('p-3', 'You are reading this text. Amazing, isn\'t it?', 300, 20)">3</button>
+
+		<p id="p-1"/>
+
+		<p id="p-2"/>
+
+		<p id="p-3"/>
+	</body>
+</html>
