@@ -2,33 +2,6 @@
 	<head>
 		<script>
 
-		function typr_depr(text) {
-			var current = "";
-			var running = true;
-
-			var wait = 1000;	//in milis
-
-			var i = 0;
-			var last_i = new Date().getTime();
-			var now = last_i;
-			var stop = text.length;
-			while(running) {
-				now = new Date().getTime();
-				if(now > last_i + wait) {
-					//An iteration (i)
-					var c = text.charAt(i);
-					current += c;
-					document.getElementById('p-1').innerHTML += c;
-					i++;
-				}
-
-				if(i > stop -1) {
-					running - false;
-					return;
-				}
-			}
-		}
-
 		function anim_showText(target, message, index, interval) {
 			//Do I have to do anything?
 			if(index < message.length) {
