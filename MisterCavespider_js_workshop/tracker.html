@@ -5,11 +5,15 @@
 
 			function recieveIp(json) {
 				alert(json);
-				geoJson = json;
+				alert('q');
+				geoJson = JSON.parse(json);
 			}
+		</script>
+
+		<script>
 
 			function updateDemo() {
-				document.getElementById('demo').innerHTML = geoJson;
+				document.getElementById('demo').innerHTML = geoJson.country_code;
 			}
 		</script>
 	</head>
