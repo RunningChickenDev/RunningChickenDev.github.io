@@ -10,10 +10,10 @@
 
 				$.getJSON('http://freegeoip.net/json/', function(rawdata) {
 					var data = JSON.parse(JSON.stringify(rawdata));
-  					$('#demo').text("IP: " + data.ip);
-					$('#demo').text("COUNTRY: " + data.country_name);
-					$('#demo').text("REGION: " + data.region_name);
-					$('#demo').text("CITY: " + data.city);
+  					$('#demo').append("IP: " + data.ip + '<BR>');
+					$('#demo').append("COUNTRY: " + data.country_name + '<BR>');
+					$('#demo').append("REGION: " + data.region_name + '<BR>');
+					$('#demo').append("CITY: " + data.city + '<BR>');
 				});
 			}
 		</script>
