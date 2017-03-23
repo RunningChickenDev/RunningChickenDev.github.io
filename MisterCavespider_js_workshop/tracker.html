@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<script>
+			var geoJson = "nothing";
+
+			function recieveIp(json) {
+				alert(json);
+				geoJson = json;
+			}
+
+			function updateDemo() {
+				document.getElementById('demo').innerHTML = geoJson;
+			}
+		</script>
+
+		<script src="http://freegeoip.net/json/?callback=recieveIp"></script>
+	</head>
+
+	<body>
+
+		<button onClick="updateDemo()">update</button>
+
+		<div id="demo">
+		</div>
+
+
+	</body>
+</html>
