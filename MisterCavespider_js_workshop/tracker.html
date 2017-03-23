@@ -1,26 +1,27 @@
 <html>
 	<head>
-		<script src="http://freegeoip.net/json/?callback=recieveIp">
-			var geoJson = "nothing";
-
-			function recieveIp(json) {
-				alert(json);
-				alert('q');
-				geoJson = JSON.parse(json);
-			}
-		</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 		<script>
+			var p = "no";
 
-			function updateDemo() {
-				document.getElementById('demo').innerHTML = geoJson.country_code;
+			function update() {
+				console.log('update');
+
+				$.getJSON('http://freegeoip.net/json/', function(rawdata) {
+					var data = JSON.parse(JSON.stringify(rawdata));
+  					$('#demo').text("IP: " + data.ip);
+					$('#demo').text("COUNTRY: " + data.country_name);
+					$('#demo').text("REGION: " + data.region_name);
+					$('#demo').text("CITY: " + data.city);
+				});
 			}
 		</script>
 	</head>
 
 	<body>
 
-		<button onClick="updateDemo()">update</button>
+		<button onClick="update()">update</button>
 
 		<div id="demo">
 		</div>
