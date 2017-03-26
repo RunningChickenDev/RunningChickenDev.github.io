@@ -4,9 +4,13 @@
 
 		<script>
 			function update() {
+				//indicate an update
 				console.log('update');
+				//clear
+				$('#demo').empty();
 
 				$.getJSON('https://freegeoip.net/json/', function(rawdata) {
+
 					var data = JSON.parse(JSON.stringify(rawdata));
 					$('#demo').append("FULL JSON: " + JSON.stringify(data, null, 2) + '<BR>');
   					$('#demo').append("IP: " + data.ip + '<BR>');
@@ -14,9 +18,7 @@
 					$('#demo').append("REGION: " + data.region_name + '<BR>');
 					$('#demo').append("CITY: " + data.city + '<BR>');
 				});
-			}
 
-			function getIpString() {
 
 			}
 		</script>
@@ -27,6 +29,7 @@
 		<button onClick="update()">update</button>
 
 		<div id="demo">
+
 		</div>
 
 
