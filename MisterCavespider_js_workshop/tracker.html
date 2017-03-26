@@ -1,37 +1,83 @@
 <html>
 	<head>
+		<style>
+
+		div.text {
+			font-family: Verdana;
+			font-size: 14;
+		}
+
+		div.code-container {
+			font-family: monospace;
+			font-size: 14;
+			margin: 2;
+		}
+
+		div.code-header {
+			font-family: monospace;
+			font-size: 14;
+		}
+
+		div.code-code {
+			font-family: monospace;
+			font-size: 14;
+			margin: 10;
+		}
+
+		</style>
+
+		<!--jQuery-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+		<!--std js-->
 		<script>
+			var showJSON = true;
+
 			function update() {
 				//indicate an update
 				console.log('update');
 				//clear
-				$('#demo').empty();
+				$('#demo-raw-header').empty();
+				$('#demo-raw-code').empty();
+				$('#demo-info').empty();
+
 
 				$.getJSON('https://freegeoip.net/json/', function(rawdata) {
-
 					var data = JSON.parse(JSON.stringify(rawdata));
-					$('#demo').append("FULL JSON: " + JSON.stringify(data, null, 2) + '<BR>');
-  					$('#demo').append("IP: " + data.ip + '<BR>');
-					$('#demo').append("COUNTRY: " + data.country_name + '<BR>');
-					$('#demo').append("REGION: " + data.region_name + '<BR>');
-					$('#demo').append("CITY: " + data.city + '<BR>');
+
+					if(showJSON == true) {
+						$('#demo-raw-header').html("FULL JSON:<BR>");
+						$('#demo-raw-code').text(JSON.stringify(data, null, 2));
+					}
+
+  					$('#demo-info').append("IP: " + data.ip + '<BR>');
+					$('#demo-info').append("COUNTRY: " + data.country_name + '<BR>');
+					$('#demo-info').append("REGION: " + data.region_name + '<BR>');
+					$('#demo-info').append("CITY: " + data.city + '<BR>');
 				});
+			}
 
-
+			function toggleShowJSON() {
+				showJSON = !showJSON;
 			}
 		</script>
 	</head>
 
 	<body>
-
+		<!--button for updates-->
 		<button onClick="update()">update</button>
+		<!--button for updates-->
+		<button onClick="toggleShowJSON()">show raw JSON</button>
 
+
+		<!--generic content container-->
 		<div id="demo">
+			<div id="demo-raw" class="code-container">
+				<div id="demo-raw-header" class="code-header"></div>
+				<div id="demo-raw-code" class="code-code"></div>
+			</div>
 
-		</div>
-
-
+			<div id="demo-info" class="text"></div>
+		<div>
 	</body>
 </html>
