@@ -6,7 +6,7 @@
 			function update() {
 				console.log('update');
 
-				$.getJSON('http://freegeoip.net/json/', function(rawdata) {
+				$.getJSON('https://freegeoip.net/json/', function(rawdata) {
 					var data = JSON.parse(JSON.stringify(rawdata));
 					$('#demo').append("FULL JSON: " + JSON.stringify(data, null, 2) + '<BR>');
   					$('#demo').append("IP: " + data.ip + '<BR>');
