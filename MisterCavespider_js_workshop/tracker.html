@@ -3,18 +3,21 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 		<script>
-			var p = "no";
-
 			function update() {
 				console.log('update');
 
 				$.getJSON('http://freegeoip.net/json/', function(rawdata) {
 					var data = JSON.parse(JSON.stringify(rawdata));
+					$('#demo').append("FULL JSON: " + JSON.stringify(data, null, 2) + '<BR>');
   					$('#demo').append("IP: " + data.ip + '<BR>');
 					$('#demo').append("COUNTRY: " + data.country_name + '<BR>');
 					$('#demo').append("REGION: " + data.region_name + '<BR>');
 					$('#demo').append("CITY: " + data.city + '<BR>');
 				});
+			}
+
+			function getIpString() {
+
 			}
 		</script>
 	</head>
