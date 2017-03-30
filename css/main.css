@@ -1,3 +1,23 @@
 * {
- color: red;
+  font-family: 'Raleway', serif;
+}
+
+h1 {
+  color: white;
+  background-color: DodgerBlue;
+  text-align: center;
+}
+
+ul{
+  text-align: center;
+}
+
+li {
+  display: inline-block;
+  border-width: 2px;
+  border-color: DodgerBlue;
+}
+
+p {
+  font-family: 'Russo One', sans-serif;
 }
