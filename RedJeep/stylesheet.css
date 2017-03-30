@@ -1,3 +1,11 @@
+* {
+  
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
 h1 {
   background-color: DodgerBlue;
   color: White;
