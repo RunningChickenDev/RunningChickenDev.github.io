@@ -38,6 +38,7 @@ p {
 }
 
 #cover {
+  margin-top: 67px;
   background: url(https://notadinnerblog.files.wordpress.com/2016/09/cropped-avian_influenza_running_chicken.jpg)
   no-repeat center bottom;
   background-position: center;
@@ -51,12 +52,13 @@ p {
   margin: 0 auto;
   position: relative;
   text-align: center;
-  top: 280px;
+  top: 10%;
   width: 70%;
+  background-color: none;
 }
 
 .navigation {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgb(51, 51, 51);
   overflow-y: auto;
   position: fixed;
   left: 0;
