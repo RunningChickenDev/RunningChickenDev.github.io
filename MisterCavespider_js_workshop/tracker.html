@@ -29,40 +29,6 @@
 		<!--jQuery-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-		<!--std js-->
-		<!--script>
-			var showJSON = true;
-
-			function update() {
-				//indicate an update
-				console.log('update');
-				//clear
-				$('#demo-raw-header').empty();
-				$('#demo-raw-code').empty();
-				$('#demo-info').empty();
-
-
-				$.getJSON('https://www.geoplugin.net/json.gp?jsoncallback=?', function(rawdata) {
-					var data = JSON.parse(JSON.stringify(rawdata));
-
-					if(showJSON == true) {
-						$('#demo-raw-header').html("FULL JSON:<BR>");
-						$('#demo-raw-code').text(JSON.stringify(data, null, 2));
-					}
-
-  					$('#demo-info').append("IP: " + data.ip + '<BR>');
-					$('#demo-info').append("COUNTRY: " + data.country_name + '<BR>');
-					$('#demo-info').append("REGION: " + data.region_name + '<BR>');
-					$('#demo-info').append("CITY: " + data.city + '<BR>');
-					$('#demo-info').append("COOKIES? " + document.cookie);
-				});
-			}
-
-			function toggleShowJSON() {
-				showJSON = !showJSON;
-			}
-		</script-->
-
 		<script>
 		var showJSON = true;
 
@@ -71,7 +37,8 @@
 		}
 		</script>
 
-		<script src="trackerlib.js">
+		<script src="trackerlib.js"></script>
+		<script>
 		setTrackerSite('https://www.geoplugin.net/json.gp');
 		setDataHandler(function(data) {
 			if(showJSON == true) {
