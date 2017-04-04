@@ -34,9 +34,11 @@ function request() {
   	console.log("Requesting from site: " + getTrackerSite());
 
   	$.getJSON(trackerSite, function(rawdata) {
+		console.log("Recieved data from site...");
     	//might not be the fastest way
     	var data = JSON.parse(JSON.stringify(rawdata));
 
+		console.log("Handler: " + dataHandler);
     	dataHandler(data);
   	});
 }

@@ -39,14 +39,16 @@
 
 		<script src="trackerlib.js"></script>
 		<script>
-		setTrackerSite('https://www.geoplugin.net/json.gp');
+		setTrackerSite('https://freegeoip.net/json/');
 		setDataHandler(function(data) {
+			console.log("Handling data...");
+
 			if(showJSON == true) {
 				$('#demo-raw-header').html("FULL JSON:<BR>");
 				$('#demo-raw-code').text(JSON.stringify(data, null, 2));
 			}
 
-			$('#demo-info').append("IP: " + data.geoplugin_request + '<BR>');
+			$('#demo-info').append("IP: " + data.ip + '<BR>');
 			$('#demo-info').append("COUNTRY: " + data.country_name + '<BR>');
 			$('#demo-info').append("REGION: " + data.region_name + '<BR>');
 			$('#demo-info').append("CITY: " + data.city + '<BR>');
