@@ -9,8 +9,10 @@ document.getElementsByTagName('head')[0].appendChild(script);
 /**
  * literal string
  */
-var trackerSite;
-var dataHandler;
+var trackerSite = 'https://freegeoip.net/json/';
+var dataHandler = function(data) {
+	alert(JSON.stringify(data));
+};
 
 function getTrackerSite() {
   	return trackerSite;
@@ -35,10 +37,8 @@ function request() {
 
   	$.getJSON(trackerSite, function(rawdata) {
 		console.log("Recieved data from site...");
-    	//might not be the fastest way
-    	var data = JSON.parse(JSON.stringify(rawdata));
 
 		console.log("Handler: " + dataHandler);
-    	dataHandler(data);
+    	dataHandler(rawdata);
   	});
 }
