@@ -64,6 +64,7 @@
 		</script-->
 
 		<script src="trackerlib.js">
+		setTrackerSite('https://www.geoplugin.net/json.gp?jsoncallback=?');
 		setDataHandler(function(data) {
 			$('#demo-info').append("IP: " + data.ip + '<BR>');
 			$('#demo-info').append("COUNTRY: " + data.country_name + '<BR>');
