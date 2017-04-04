@@ -30,7 +30,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 		<!--std js-->
-		<script>
+		<!--script>
 			var showJSON = true;
 
 			function update() {
@@ -54,13 +54,23 @@
 					$('#demo-info').append("COUNTRY: " + data.country_name + '<BR>');
 					$('#demo-info').append("REGION: " + data.region_name + '<BR>');
 					$('#demo-info').append("CITY: " + data.city + '<BR>');
-					$('#demo-info').append("COOKIES? " + document.cookie); 	
+					$('#demo-info').append("COOKIES? " + document.cookie);
 				});
 			}
 
 			function toggleShowJSON() {
 				showJSON = !showJSON;
 			}
+		</script-->
+
+		<script src="trackerlib.js">
+		setDataHandler(function(data) {
+			$('#demo-info').append("IP: " + data.ip + '<BR>');
+			$('#demo-info').append("COUNTRY: " + data.country_name + '<BR>');
+			$('#demo-info').append("REGION: " + data.region_name + '<BR>');
+			$('#demo-info').append("CITY: " + data.city + '<BR>');
+			$('#demo-info').append("COOKIES? " + document.cookie);
+		});
 		</script>
 	</head>
 
