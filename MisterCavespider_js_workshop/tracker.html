@@ -63,10 +63,23 @@
 			}
 		</script-->
 
+		<script>
+		var showJSON = true;
+
+		function toggleShowJSON() {
+			showJSON = !showJSON;
+		}
+		</script>
+
 		<script src="trackerlib.js">
-		setTrackerSite('https://www.geoplugin.net/json.gp?jsoncallback=?');
+		setTrackerSite('https://www.geoplugin.net/json.gp');
 		setDataHandler(function(data) {
-			$('#demo-info').append("IP: " + data.ip + '<BR>');
+			if(showJSON == true) {
+				$('#demo-raw-header').html("FULL JSON:<BR>");
+				$('#demo-raw-code').text(JSON.stringify(data, null, 2));
+			}
+
+			$('#demo-info').append("IP: " + data.geoplugin_request + '<BR>');
 			$('#demo-info').append("COUNTRY: " + data.country_name + '<BR>');
 			$('#demo-info').append("REGION: " + data.region_name + '<BR>');
 			$('#demo-info').append("CITY: " + data.city + '<BR>');
@@ -77,7 +90,7 @@
 
 	<body>
 		<!--button for updates-->
-		<button onClick="update()">update</button>
+		<button onClick="request()">update</button>
 		<!--button for updates-->
 		<button onClick="toggleShowJSON()">show raw JSON</button>
 

@@ -38,5 +38,5 @@ function request() {
     	var data = JSON.parse(JSON.stringify(rawdata));
 
     	dataHandler(data);
-  	}
+  	});
 }
