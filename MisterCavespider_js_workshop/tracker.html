@@ -41,18 +41,23 @@
 		<script>
 		setTrackerSite('https://freegeoip.net/json/');
 		setDataHandler(function(data) {
+			$('#demo-info').empty();
+
 			console.log("Handling data...");
 
 			if(showJSON == true) {
 				$('#demo-raw-header').html("FULL JSON:<BR>");
 				$('#demo-raw-code').text(JSON.stringify(data, null, 2));
+			} else {
+				$('#demo-raw-header').empty();
+				$('#demo-raw-code').empty();
 			}
 
 			$('#demo-info').append("IP: " + data.ip + '<BR>');
 			$('#demo-info').append("COUNTRY: " + data.country_name + '<BR>');
 			$('#demo-info').append("REGION: " + data.region_name + '<BR>');
 			$('#demo-info').append("CITY: " + data.city + '<BR>');
-			$('#demo-info').append("COOKIES? " + document.cookie);
+			$('#demo-info').append("COOKIES? " + document.cookie + '<BR>');
 		});
 		</script>
 	</head>
