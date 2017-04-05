@@ -43,6 +43,8 @@ function parseText(raw) {
 			appendContent(char);
 		}
 	}
+
+	appendContent('</p>');
 }
 
 function appendContent(content) {
