@@ -17,10 +17,12 @@
 			var text = "#MARKDOWN"
 			var html = converter.makeHtml(text);
 			$('#text').html(html);
-		}			
+		}
+		</script>	
 			
 	</head>
-	<body onload="readWholeFile('testingtext.txt');">
+	
+	<body onload="readMD();">
 		<div class="_txt_c_" id="text">
 		</div>
 	</body>
