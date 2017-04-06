@@ -1,9 +1,15 @@
 /************************************************************/
 //includes jQuery
-var script = document.createElement('script');
-script.src = 'https://code.jquery.com/jquery-1.11.0.min.js';
-script.type = 'text/javascript';
-document.getElementsByTagName('head')[0].appendChild(script);
+var script_q = document.createElement('script');
+script_q.src = 'https://code.jquery.com/jquery-1.11.0.min.js';
+script_q.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(script_q);
+
+//showdown
+var script_t = document.createElement('script');
+script_t.src = 'https://cdn.rawgit.com/showdownjs/showdown/1.6.3/dist/showdown.min.js';
+script_t.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(script_t);
 /************************************************************/
 
 // creates reader
@@ -21,12 +27,12 @@ function readWholeFile(userUrl) {
 		url: userUrl,
 		success: function(data) {
 			console.log('loaded: ' + data);
-			parseText(data);
+			parseMD(data);
 		}
 	});
 }
 
-function parseText(raw) {
+function parseText_TEXT(raw) {
 	var p_count = 0;
 
 	console.log('appending content');
@@ -45,6 +51,11 @@ function parseText(raw) {
 	}
 
 	appendContent('</p>');
+}
+
+function parseMD(raw) {
+	var converter = new showdown.Converter();
+	appendContent(converter.makeHtml(raw));
 }
 
 function appendContent(content) {

@@ -1,9 +1,11 @@
-This is a text. Can't handle this.
+# Title
+
+This is a *text*. <del>Can't handle this.</del>
+HTML tags work too!
 This is more of text. Now with a paraghraph.
 
-Wow!
+**Wow!**
 
+Paragraphing is solved automatically.
 
-
-Above here are multiple lines, and these will be viewed as one space, but actually create different paragraphs.
-This might pose a problem.
+## **Another Header**
