@@ -31,6 +31,10 @@ function loadMarkDown() {
 	$.ajax({
 		url: settings.url,
 		success: function(data) {
+			console.log('read: ' + data);
+			console.log('url: ' + settings.url);
+			console.log('target: ' + settings.target);
+
 			var converter = new showdown.Converter();
 			appendContent(converter.makeHtml(data));
 		}
@@ -49,5 +53,6 @@ function createReader() {
 
 //internal
 function setContent(content) {
+	console.log('setting content of: #' + settings.target);
 	$('#' + settings.target).html(content);
 }
