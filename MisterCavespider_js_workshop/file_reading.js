@@ -36,7 +36,7 @@ function loadMarkDown() {
 			console.log('target: ' + settings.target);
 
 			var converter = new showdown.Converter();
-			appendContent(converter.makeHtml(data));
+			setContent(converter.makeHtml(data));
 		}
 	});
 }
