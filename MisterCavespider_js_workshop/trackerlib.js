@@ -9,36 +9,24 @@ document.getElementsByTagName('head')[0].appendChild(script);
 /**
  * literal string
  */
-var trackerSite = 'https://freegeoip.net/json/';
-var dataHandler = function(data) {
-	alert(JSON.stringify(data));
+var tracker = {
+	site: 'https://freegeoip.net/json/',
+	handler: function(data) {
+		alert(JSON.stringify(data));
+	}
 };
 
-function getTrackerSite() {
-  	return trackerSite;
+function setSite(site) {
+  	tracker.site = site;
 }
 
-function setTrackerSite(site) {
-  	console.log("Setting new tracker site...");
-  	trackerSite = site;
-}
-
-function getDataHandler() {
-	return dataHandler;
-}
-
-function setDataHandler(handler) {
-	dataHandler = handler;
+function setHandler(handler) {
+	tracker.handler = handler;
 }
 
 //returns json
 function request() {
-  	console.log("Requesting from site: " + getTrackerSite());
-
-  	$.getJSON(trackerSite, function(rawdata) {
-		console.log("Recieved data from site...");
-
-		console.log("Handler: " + dataHandler);
-    	dataHandler(rawdata);
+  	$.getJSON(trackerSite, function(data) {
+    	tracker.handler(data);
   	});
 }
