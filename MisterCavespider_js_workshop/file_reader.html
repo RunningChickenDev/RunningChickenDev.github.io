@@ -9,20 +9,16 @@
 
 		<!--jQuery-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script src="file_reading.js"></script>
-		<script src="https://cdn.rawgit.com/showdownjs/showdown/1.6.3/dist/showdown.min.js"></script>
-		<script>
-		function readMD() {
-			var converter = new showdown.Converter();
-			var text = "#MARKDOWN"
-			var html = converter.makeHtml(text);
-			$('#text').html(html);
+		<script src="file_reading.js">
+		function load() {
+			setTarget("text");
+			setFile("testingtext.txt");
+			loadMarkDown();
 		}
 		</script>
-
 	</head>
 
-	<body onload="readWholeFile('testingtext.txt');">
+	<body onload="load();">
 		<div class="_txt_c_" id="text">
 		</div>
 	</body>
