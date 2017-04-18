@@ -1,0 +1,77 @@
+<html>
+	<head>
+		<title>1984 project home page</title>
+		<!-- insert styles & UTF-8 here-->
+
+		<!-- jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<!-- Bootstrap css -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+		<!-- Bootstrap js -->
+		<script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.js" crossorigin="anonymous"></script>
+		<!-- Tracker API js -->
+		<script href="../js/trackerlib.js"></script>
+
+		<script>
+		function putAllInfo() {
+			putDeviceInfo('device');
+			putDeepDeviceInfo('deepdevice');
+		}
+
+		var g_LocationInfo = "location";
+
+		function yesno(bool) {
+			if(bool == true) {
+				return "yes";
+			} else {
+				return "no";
+			}
+		}
+
+		function putDeviceInfo(id) {
+			console.log(navigator);
+			var txt = "";
+			txt+= "Browser codename: " + navigator.appCodeName + "<BR>";
+			txt+= "Browser real name: " + navigator.appName + "<BR>";
+			txt+= "Browser vendor: " + navigator.vendor + "<BR>";
+			txt+= "Browser version: <small>" + navigator.appVersion + "</small><BR>";
+			txt+= "Browser language: " + navigator.language + "<BR>";
+			txt+= "Are cookies enabled: " + yesno(navigator.cookieEnabled) + "<BR>";
+			txt+= "Geolocation support: " + yesno(navigator.cookieEnabled) + "<BR>";
+			txt+= "Internet connection: " + yesno(navigator.onLine) + "<BR>";
+			txt+= "Platform: " + navigator.platform + "<BR>";
+			txt+= "Operating System: " + navigator.oscpu + "<BR>";
+			txt+= "Engine name: " + navigator.product + "<BR>";
+			$('#'+id+"-data").html(txt);
+		}
+
+		function putLocationInfo(id) {
+			g_LocationInfo = id;
+
+
+		}
+
+
+
+		</script>
+
+	</head>
+
+	<body onload="putAllInfo()">
+		<h1><i>Big Brother is watching you</i></h1>
+
+		<div id="device">
+			<h2>Device info</h2>
+			<p id="device-info"></p>
+			<p id="device-data"></p>
+		</div>
+
+		<div id="location">
+			<h2>Deep device info</h2>
+			<p id="location-info"></p>
+			<p id="location-data"></p>
+		</div>
+
+
+	</body>
+</html>
