@@ -14,13 +14,21 @@
 
 		<style>
 		table {
+			margin: 4px;
+			margin-left: 30px;
+			table-layout: fixed;
 			border-collapse: collapse;
 			width: 100%;
 		}
 
 		td {
+			margin: 0;
 			height: 30px;
 			vertical-align: middle;
+		}
+
+		div {
+			margin: 10px;
 		}
 		</style>
 
@@ -30,7 +38,12 @@
 			putLocationInfo();
 		}
 
-		function toHuman(data) {
+		function toHuman(data, boolonly=false) {
+			if(boolonly) {
+				if(data) {return "yes";}
+				else {return "no";}
+			}
+
 			if(data == true) {
 				return "yes";
 			} else if(data == false) {
@@ -51,7 +64,9 @@
 			$("#device-data-browservendor").html(tableRowOf("Browser vendor", navigator.vendor));
 			$("#device-data-browserlang").html(tableRowOf("Browser language", navigator.language));
 			$("#device-data-cookies").html(tableRowOf("Are cookies supported?", navigator.cookieEnabled));
-			$("#device-data-geolocation").html(tableRowOf("Geolocation supported?", navigator.geolocation));
+			$("#device-data-geolocation").html(tableRowOf("Geolocation supported?", navigator.geolocation, true));
+			$("#device-data-internet").html(tableRowOf("Is there internet connetion?", navigator.onLine));
+			$("#device-data-platform").html(tableRowOf("Platform", navigator.platform));
 		}
 
 		function putLocationInfo() {
@@ -72,8 +87,8 @@
 
 		}
 
-		function tableRowOf(k, v) {
-			return "<td>"+k+"</td> <td>"+toHuman(v)+"</td>";
+		function tableRowOf(k, v, boolonly=false) {
+			return "<td>"+k+"</td> <td>"+toHuman(v,boolonly)+"</td>";
 		}
 
 		</script>
@@ -85,7 +100,10 @@
 
 		<div id="device">
 			<h2>Device info</h2>
-			<p id="device-info"></p>
+			<p id="device-info">
+				The information below is not guaranteed to work, but is supported on most browsers.
+				It might give wrong codes, or not support a feature.
+			</p>
 			<table id="device-data">
 				<tbody>
 					<tr id="device-data-browsername"></tr>
@@ -95,14 +113,18 @@
 					<tr id="device-data-cookies"></tr>
 					<tr id="device-data-geolocation"></tr>
 					<tr id="device-data-internet"></tr>
-					<tr id="devide-data-platform"></tr>
+					<tr id="device-data-platform"></tr>
 				</tbody>
 			</table>
 		</div>
 
 		<div id="location">
 			<h2>Location info</h2>
-			<div id="location-info"></div>
+			<p id="location-info">
+				This is the information that can be gathered based upon your ip address.<br>
+				Note: your ip address isn't actually bound to your real location, so the
+				information might be outdated/inacurate.
+			</p>
 			<table id="location-data">
 				<tbody>
 					<tr id="location-data-ip"></tr>
