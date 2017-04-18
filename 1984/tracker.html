@@ -10,48 +10,71 @@
 		<!-- Bootstrap js -->
 		<script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.js" crossorigin="anonymous"></script>
 		<!-- Tracker API js -->
-		<script href="../js/trackerlib.js"></script>
+		<script src="../js/trackerlib.js"></script>
+
+		<style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td {
+			height: 30px;
+			vertical-align: middle;
+		}
+		</style>
 
 		<script>
 		function putAllInfo() {
-			putDeviceInfo('device');
-			putDeepDeviceInfo('deepdevice');
+			putDeviceInfo();
+			putLocationInfo();
 		}
 
-		var g_LocationInfo = "location";
-
-		function yesno(bool) {
-			if(bool == true) {
+		function toHuman(data) {
+			if(data == true) {
 				return "yes";
-			} else {
+			} else if(data == false) {
 				return "no";
+			} else if(data == undefined) {
+				return "unknown";
+			} else if(data == null) {
+				return "nothing";
+			} else {
+				return data;
 			}
 		}
 
-		function putDeviceInfo(id) {
+		function putDeviceInfo() {
 			console.log(navigator);
-			var txt = "";
-			txt+= "Browser codename: " + navigator.appCodeName + "<BR>";
-			txt+= "Browser real name: " + navigator.appName + "<BR>";
-			txt+= "Browser vendor: " + navigator.vendor + "<BR>";
-			txt+= "Browser version: <small>" + navigator.appVersion + "</small><BR>";
-			txt+= "Browser language: " + navigator.language + "<BR>";
-			txt+= "Are cookies enabled: " + yesno(navigator.cookieEnabled) + "<BR>";
-			txt+= "Geolocation support: " + yesno(navigator.cookieEnabled) + "<BR>";
-			txt+= "Internet connection: " + yesno(navigator.onLine) + "<BR>";
-			txt+= "Platform: " + navigator.platform + "<BR>";
-			txt+= "Operating System: " + navigator.oscpu + "<BR>";
-			txt+= "Engine name: " + navigator.product + "<BR>";
-			$('#'+id+"-data").html(txt);
+			$("#device-data-browsername").html(tableRowOf("Browser name", navigator.appName));
+			$("#device-data-browsercode").html(tableRowOf("Browser code", navigator.appCodeName));
+			$("#device-data-browservendor").html(tableRowOf("Browser vendor", navigator.vendor));
+			$("#device-data-browserlang").html(tableRowOf("Browser language", navigator.language));
+			$("#device-data-cookies").html(tableRowOf("Are cookies supported?", navigator.cookieEnabled));
+			$("#device-data-geolocation").html(tableRowOf("Geolocation supported?", navigator.geolocation));
 		}
 
-		function putLocationInfo(id) {
-			g_LocationInfo = id;
+		function putLocationInfo() {
+			setSite("https://freegeoip.net/json/");
+			setHandler(handleLocationInfo);
+			request();
+		}
 
+		function handleLocationInfo(data) {
+			console.log(data);
+			$("#location-data-ip").html(tableRowOf("IP Address", data.ip));
+			$("#location-data-countryname").html(tableRowOf("Country name", data.country_name));
+			$("#location-data-countrycode").html(tableRowOf("Country code", data.country_code));
+			$("#location-data-regionname").html(tableRowOf("Region name", data.region_name));
+			$("#location-data-regioncode").html(tableRowOf("Region code", data.region_code));
+			$("#location-data-city").html(tableRowOf("City", data.city));
+			$("#location-data-timezone").html(tableRowOf("Timezone", data.time_zone));
 
 		}
 
-
+		function tableRowOf(k, v) {
+			return "<td>"+k+"</td> <td>"+toHuman(v)+"</td>";
+		}
 
 		</script>
 
@@ -63,13 +86,34 @@
 		<div id="device">
 			<h2>Device info</h2>
 			<p id="device-info"></p>
-			<p id="device-data"></p>
+			<table id="device-data">
+				<tbody>
+					<tr id="device-data-browsername"></tr>
+					<tr id="device-data-browsercode"></tr>
+					<tr id="device-data-browservendor"></tr>
+					<tr id="device-data-browserlang"></tr>
+					<tr id="device-data-cookies"></tr>
+					<tr id="device-data-geolocation"></tr>
+					<tr id="device-data-internet"></tr>
+					<tr id="devide-data-platform"></tr>
+				</tbody>
+			</table>
 		</div>
 
 		<div id="location">
-			<h2>Deep device info</h2>
-			<p id="location-info"></p>
-			<p id="location-data"></p>
+			<h2>Location info</h2>
+			<div id="location-info"></div>
+			<table id="location-data">
+				<tbody>
+					<tr id="location-data-ip"></tr>
+					<tr id="location-data-countryname"></tr>
+					<tr id="location-data-countrycode"></tr>
+					<tr id="location-data-regionname"></tr>
+					<tr id="location-data-regioncode"></tr>
+					<tr id="location-data-city"></tr>
+					<tr id="location-data-timezone"></tr>
+				</tbody>
+			</table>
 		</div>
 
 

@@ -26,7 +26,7 @@ function setHandler(handler) {
 
 //returns json
 function request() {
-  	$.getJSON(trackerSite, function(data) {
+  	$.getJSON(tracker.site, function(data) {
     	tracker.handler(data);
   	});
 }
