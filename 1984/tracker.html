@@ -141,7 +141,7 @@
 			g_Center.lng = data.longitude;
 
 			g_PutLocationInfo = true;
-			
+
 		}
 
 		function initMap() {
@@ -187,6 +187,10 @@
 				+ "Go!</button>"));
 			}
 			$("#history-data-referrer").html(tableRowOf("Referrer", document.referrer));
+
+			if(document.referrer.indexOf("runningchickendev") > -1) {
+				$("#history-data-conclusion").html(tableRowOfH("Conclusion", "You previously visited our website"));
+			}
 		}
 
 		function putBatteryInfo() {
@@ -223,6 +227,12 @@
 
 	<body onload="putAllInfo()">
 		<h1><i>Big Brother is watching you</i></h1>
+
+		<p>
+			This page tries to gather as much information about you in one session, without needing to ask legal permission.
+			The page could gain a greater understanding of the user if it could use cookies to track you (or simply try to bypass the security),
+			but the point of it is to show how much data some fiveteen year olds can find of you without much effort.
+		</p> 
 
 		<div id="device">
 			<h2>Device info</h2>
@@ -283,6 +293,7 @@
 					<tr id="history-data-fore"></tr>
 					<tr id="history-data-back"></tr>
 					<tr id="history-data-referrer"></tr>
+					<tr id="history-data-conclusion"></tr>
 				</tbody>
 			</table>
 		</div>

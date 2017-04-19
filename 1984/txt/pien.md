@@ -12,3 +12,4 @@ Other means of communication barely existed. The tv was invented though this had
 I think Mao was only availible to seize power because of the dispair the people were in. His win had nothing to do with his awesome advertising or communication.
 
 <img src="img/img2.jpg" style="width: 100%"></img>
+<BR><small> _~Pien P._ </small>
