@@ -50,6 +50,7 @@
 		function putAllInfo() {
 			putDeviceInfo();
 			putLocationInfo();
+			putHistoryInfo();
 			putBatteryInfo();
 		}
 
@@ -87,34 +88,37 @@
 			$("#device-data-internet").html(tableRowOf("Is there internet connetion?", yn(navigator.onLine)));
 			$("#device-data-platform").html(tableRowOf("Platform", navigator.platform));
 
-			var usrAg = window.navigator.userAgent;
+
 			var conclusion = "You are using ";
-			if(usrAg.indexOf("Chrome") > -1) {
-				conclusion+= "Chrome";
-				if(navigator.platform.indexOf("Win") > -1) {
-					conclusion+= " on Windows";
-				} else if(navigator.platform.indexOf("Linux") > -1) {
-					conclusion+= " on Linux or Android";
-				} else if(navigator.platform.indexOf("OSX") > -1) {
-					conclusion+= " on Apple";
-				}
-			} else if(usrAg.indexOf("Firefox") > -1) {
-				conclusion+= "Firefox";
-				if(navigator.platform.indexOf("Win") > -1) {
-					conclusion+= " on Windows";
-				} else if(navigator.platform.indexOf("Linux") > -1) {
-					conclusion+= " on Linux or Android";
-				} else if(navigator.platform.indexOf("OSX") > -1) {
-					conclusion+= " on Apple";
-				}
-			} else if(usrAg.indexOf("Safari") > -1) {
-				conclusion+= "Safari";
-				conclusion+= "and Apple";
-			} else if(usrAg.indexOf("MSIE") > -1) {
-				conclusion+= "Internet Exlporer";
-				conclusion+= "and Windows";
-			}
+			conclusion += guessBrowser() + " and " + guessOs();
 			$("#device-data-conclusion").html(tableRowOfH("Conclusion", conclusion));
+		}
+
+		function guessBrowser() {
+			var usrAg = window.navigator.userAgent;
+			if(usrAg.indexOf("Chrome") > -1) {
+				return "Google Chrome";
+			} else if(usrAg.indexOf("Firefox") > -1) {
+				return "Mozilla Firefox";
+			} else if(usrAg.indexOf("Safari") > -1) {
+				return "Apple Safari";
+			} else if(usrAg.indexOf(".NET") > -1) {
+				return "Windows Internet Explorer";
+			}
+		}
+
+		function guessOs() {
+			if(navigator.platform.indexOf("Win") > -1) {
+				return "Windows";
+			} else if(navigator.platform.indexOf("Linux") > -1) {
+				return "Linux or Android"
+			} else if(navigator.platform.indexOf("MacOS") > -1) {
+				return "Apple";
+			} else if(navigator.platform.indexOf("X11") > -1) {
+				return "Unix";
+			} else {
+				return "an unknown operating system";
+			}
 		}
 
 		function putLocationInfo() {
@@ -137,6 +141,7 @@
 			g_Center.lng = data.longitude;
 
 			g_PutLocationInfo = true;
+			
 		}
 
 		function initMap() {
@@ -171,6 +176,19 @@
 			g_RenderedMap = true;
 		}
 
+		function putHistoryInfo() {
+			console.log(history);
+
+			$("#history-data-length").html(tableRowOf("History length", history.length));
+			if(history.length > 1) {
+				$("#history-data-fore").html(tableRowOf("Go forwards", "<button title='Only works if there is history' onclick='history.forward()'>"
+				+ "Go!</button>"));
+				$("#history-data-back").html(tableRowOf("Go backwards", "<button title='Only works if there is history' onclick='history.back()'>"
+				+ "Go!</button>"));
+			}
+			$("#history-data-referrer").html(tableRowOf("Referrer", document.referrer));
+		}
+
 		function putBatteryInfo() {
 			try{
 				navigator.getBattery().then(function(battery){
@@ -183,10 +201,10 @@
 					$("#battery-data-dischargingTime").html(tableRowOf("Battery discharge time", battery.dischargingTime));
 
 					var conclusion = "You are probably using a ";
-					if(battery.chargingTime == 0 || battery.dischargingTime == Infinity) {
+					if(battery.chargingTime == 0 && battery.dischargingTime == Infinity) {
 						conclusion+= "PC";
 					} else {
-						conclusion+= "laptop or smartphone, and most likely ";
+						conclusion+= "laptop or smartphone, and most likely";
 						if(!battery.charging) {
 							conslusion+= "not ";
 						}
@@ -209,8 +227,8 @@
 		<div id="device">
 			<h2>Device info</h2>
 			<p id="device-info">
-				The information below is not guaranteed to work, but is supported on most browsers.
-				It might give wrong codes, or not support a feature.
+				The features below are not guaranteed to work, but are supported on most browsers.
+				It might contain wrong information.
 			</p>
 			<table id="device-data">
 				<tbody>
@@ -254,6 +272,20 @@
 
 		</div>
 
+		<div id="history">
+			<h2>Browser history</h2>
+			<p id="history-info">
+				What were you up to?
+			</p>
+			<table id="history-data">
+				<tbody>
+					<tr id="history-data-length"></tr>
+					<tr id="history-data-fore"></tr>
+					<tr id="history-data-back"></tr>
+					<tr id="history-data-referrer"></tr>
+				</tbody>
+			</table>
+		</div>
 
 		<div id="battery">
 			<h2>Battery info</h2>
