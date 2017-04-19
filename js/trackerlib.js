@@ -11,22 +11,23 @@ document.getElementsByTagName('head')[0].appendChild(script);
  */
 var tracker = {
 	site: 'https://freegeoip.net/json/',
-	handler: function(data) {
-		alert(JSON.stringify(data));
-	}
+	handlers: []
 };
 
 function setSite(site) {
   	tracker.site = site;
 }
 
-function setHandler(handler) {
-	tracker.handler = handler;
+function addHandler(handler) {
+	tracker.handlers.push(handler);
 }
 
 //returns json
 function request() {
   	$.getJSON(tracker.site, function(data) {
-    	tracker.handler(data);
+    	for(i=0;i<tracker.handlers.length;i++) {
+			h = tracker.handlers[i];
+			h(data);
+		}
   	});
 }

@@ -2,6 +2,7 @@
 	<head>
 		<title>1984 project home page</title>
 		<!-- insert styles & UTF-8 here-->
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -9,10 +10,16 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
 		<!-- Bootstrap js -->
 		<script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.js" crossorigin="anonymous"></script>
+		<!-- Google Maps js -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSyQqBNki_ObHfO517zyvL0g3Dj7trlrc&callback=initMap" async defer></script>
 		<!-- Tracker API js -->
 		<script src="../js/trackerlib.js"></script>
 
 		<style>
+		#location-map {
+			height: 650px;
+		}
+
 		table {
 			margin: 4px;
 			margin-left: 30px;
@@ -33,22 +40,26 @@
 		</style>
 
 		<script>
+		var g_Center = {
+			lat: 0,
+			lng: 0
+		};
+		var g_RenderedMap = false;
+		var g_PutLocationInfo = false;
+
 		function putAllInfo() {
 			putDeviceInfo();
 			putLocationInfo();
+			putBatteryInfo();
 		}
 
-		function toHuman(data, boolonly=false) {
-			if(boolonly) {
-				if(data) {return "yes";}
-				else {return "no";}
-			}
+		function yn(data) {
+			if(data) {return "yes";}
+			else {return "no";}
+		}
 
-			if(data == true) {
-				return "yes";
-			} else if(data == false) {
-				return "no";
-			} else if(data == undefined) {
+		function toHuman(data) {
+			if(data == undefined) {
 				return "unknown";
 			} else if(data == null) {
 				return "nothing";
@@ -57,21 +68,58 @@
 			}
 		}
 
+		function tableRowOf(k, v) {
+			return "<td>"+k+"</td> <td>"+toHuman(v)+"</td>";
+		}
+
+		function tableRowOfH(k, v) {
+			return "<th>"+k+"</th> <td>"+toHuman(v)+"</td>";
+		}
+
 		function putDeviceInfo() {
-			console.log(navigator);
+			console.log(window.navigator);
 			$("#device-data-browsername").html(tableRowOf("Browser name", navigator.appName));
 			$("#device-data-browsercode").html(tableRowOf("Browser code", navigator.appCodeName));
 			$("#device-data-browservendor").html(tableRowOf("Browser vendor", navigator.vendor));
 			$("#device-data-browserlang").html(tableRowOf("Browser language", navigator.language));
-			$("#device-data-cookies").html(tableRowOf("Are cookies supported?", navigator.cookieEnabled));
-			$("#device-data-geolocation").html(tableRowOf("Geolocation supported?", navigator.geolocation, true));
-			$("#device-data-internet").html(tableRowOf("Is there internet connetion?", navigator.onLine));
+			$("#device-data-cookies").html(tableRowOf("Are cookies supported?", yn(navigator.cookieEnabled)));
+			$("#device-data-geolocation").html(tableRowOf("Geolocation supported?", yn(navigator.geolocation)));
+			$("#device-data-internet").html(tableRowOf("Is there internet connetion?", yn(navigator.onLine)));
 			$("#device-data-platform").html(tableRowOf("Platform", navigator.platform));
+
+			var usrAg = window.navigator.userAgent;
+			var conclusion = "You are using ";
+			if(usrAg.indexOf("Chrome") > -1) {
+				conclusion+= "Chrome";
+				if(navigator.platform.indexOf("Win") > -1) {
+					conclusion+= " on Windows";
+				} else if(navigator.platform.indexOf("Linux") > -1) {
+					conclusion+= " on Linux or Android";
+				} else if(navigator.platform.indexOf("OSX") > -1) {
+					conclusion+= " on Apple";
+				}
+			} else if(usrAg.indexOf("Firefox") > -1) {
+				conclusion+= "Firefox";
+				if(navigator.platform.indexOf("Win") > -1) {
+					conclusion+= " on Windows";
+				} else if(navigator.platform.indexOf("Linux") > -1) {
+					conclusion+= " on Linux or Android";
+				} else if(navigator.platform.indexOf("OSX") > -1) {
+					conclusion+= " on Apple";
+				}
+			} else if(usrAg.indexOf("Safari") > -1) {
+				conclusion+= "Safari";
+				conclusion+= "and Apple";
+			} else if(usrAg.indexOf("MSIE") > -1) {
+				conclusion+= "Internet Exlporer";
+				conclusion+= "and Windows";
+			}
+			$("#device-data-conclusion").html(tableRowOfH("Conclusion", conclusion));
 		}
 
 		function putLocationInfo() {
 			setSite("https://freegeoip.net/json/");
-			setHandler(handleLocationInfo);
+			addHandler(handleLocationInfo);
 			request();
 		}
 
@@ -85,10 +133,70 @@
 			$("#location-data-city").html(tableRowOf("City", data.city));
 			$("#location-data-timezone").html(tableRowOf("Timezone", data.time_zone));
 
+			g_Center.lat = data.latitude;
+			g_Center.lng = data.longitude;
+
+			g_PutLocationInfo = true;
 		}
 
-		function tableRowOf(k, v, boolonly=false) {
-			return "<td>"+k+"</td> <td>"+toHuman(v,boolonly)+"</td>";
+		function initMap() {
+			console.log("initMap");
+			if(g_Center.lat == 0 && g_Center.lng == 0) {
+				setSite("https://freegeoip.net/json/");
+				addHandler(function(data) {
+					g_Center.lat = data.latitude;
+					g_Center.lng = data.longitude;
+					var map = new google.maps.Map(document.getElementById("location-map"), {
+						center: g_Center,
+						zoom: 14
+					});
+					var marker = new google.maps.Marker({
+						position: g_Center,
+						map: map,
+						title: "Are you here?"
+					});
+				});
+				request();
+			} else {
+				var map = new google.maps.Map(document.getElementById("location-map"), {
+					center: g_Center,
+					zoom: 14
+				});
+				var marker = new google.maps.Marker({
+					position: g_Center,
+					map: map,
+					title: "Are you here?"
+				});
+			}
+			g_RenderedMap = true;
+		}
+
+		function putBatteryInfo() {
+			try{
+				navigator.getBattery().then(function(battery){
+					//accepted
+					console.log(battery);
+
+					$("#battery-data-level").html(tableRowOf("Battery level", battery.level));
+					$("#battery-data-charging").html(tableRowOf("Is battery charging?", yn(battery.charging)));
+					$("#battery-data-chargingTime").html(tableRowOf("Battery charge time", battery.chargingTime));
+					$("#battery-data-dischargingTime").html(tableRowOf("Battery discharge time", battery.dischargingTime));
+
+					var conclusion = "You are probably using a ";
+					if(battery.chargingTime == 0 || battery.dischargingTime == Infinity) {
+						conclusion+= "PC";
+					} else {
+						conclusion+= "laptop or smartphone, and most likely ";
+						if(!battery.charging) {
+							conslusion+= "not ";
+						}
+						conclusion+= "at home";
+					}
+					$("#battery-data-conclusion").html(tableRowOfH("Conclusion", conclusion));
+				});
+			} catch (e) {
+				$("#battery-data-conclusion").html(tableRowOfH("Conclusion", "No battery support: You use PC"));
+			}
 		}
 
 		</script>
@@ -114,6 +222,7 @@
 					<tr id="device-data-geolocation"></tr>
 					<tr id="device-data-internet"></tr>
 					<tr id="device-data-platform"></tr>
+					<tr id="device-data-conclusion"></tr>
 				</tbody>
 			</table>
 		</div>
@@ -134,10 +243,33 @@
 					<tr id="location-data-regioncode"></tr>
 					<tr id="location-data-city"></tr>
 					<tr id="location-data-timezone"></tr>
+					<tr>
+						<th>Map</th>
+						<td>
+							<div id="location-map"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+
+		<div id="battery">
+			<h2>Battery info</h2>
+			<p id="battery-info">
+				This, of course, only works if you have a battery.
+			</p>
+			<table id="battery-data">
+				<tbody>
+					<tr id="battery-data-level"></tr>
+					<tr id="battery-data-charging"></tr>
+					<tr id="battery-data-chargingTime"></tr>
+					<tr id="battery-data-dischargingTime"></tr>
+					<tr id="battery-data-conclusion"></tr>
 				</tbody>
 			</table>
 		</div>
-
 
 	</body>
 </html>
