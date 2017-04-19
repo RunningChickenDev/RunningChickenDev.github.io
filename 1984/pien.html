@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>1984: Pien's page</title>
+
+		<!-- jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<!-- Bootstrap css -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+		<!-- Bootstrap js -->
+		<script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.js" crossorigin="anonymous"></script>
+		<!-- Sidebar css -->
+		<link rel="stylesheet" href="css/simple-sidebar.css">
+		<!-- Markdown API js -->
+		<script src="../js/markdownlib.js"></script>
+
+		<!-- Main js -->
+		<script>
+		function main() {
+			//toggle button
+			$("#menu-toggle").click(function(e) {
+				e.preventDefault();
+				$("#wrapper").toggleClass("toggled");
+			});
+
+			console.log("loading markdown...");
+
+			//load text
+			setTarget("text");
+			setFile("txt/pien.md");
+			loadMarkDown();
+		}
+		</script>
+
+	</head>
+
+	<body onload="main()">
+		<div id="wrapper">
+			<!-- Sidebar -->
+			<div id="sidebar-wrapper">
+				<ul class="sidebar-nav">
+					<li class="sidebar-brand">
+						<a href="/1984">1984</a>
+					</li>
+					<li>
+						<a href="stijn">Stijn</a>
+					</li>
+					<li>
+						<a href="pien">Pien</a>
+					</li>
+					<li>
+						<a href="tracker">Tracker</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /#sidebar-wrapper -->
+
+			<!-- Page Content -->
+			<div id="page-content-wrapper">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12">
+							<div id="text"></div>
+
+							<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /#page-content-wrapper -->
+
+		</div>
+		<!-- /#wrapper -->
+	</body>
+</html>
