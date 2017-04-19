@@ -16,6 +16,21 @@
 		<script src="../js/trackerlib.js"></script>
 
 		<style>
+		a:link {
+			font-style: italic;
+			color: black;
+		}
+
+		a:visited {
+			color: black;
+		}
+
+		a:hover {
+			font-style: italic;
+			text-decoration: none;
+			color: black;
+		}
+
 		#location-map {
 			height: 650px;
 		}
@@ -226,13 +241,15 @@
 	</head>
 
 	<body onload="putAllInfo()">
-		<h1><i>Big Brother is watching you</i></h1>
+		<h1>
+			<a href="/1984">Big Brother is watching you</a>
+		</h1>
 
 		<p>
 			This page tries to gather as much information about you in one session, without needing to ask legal permission.
 			The page could gain a greater understanding of the user if it could use cookies to track you (or simply try to bypass the security),
 			but the point of it is to show how much data some fiveteen year olds can find of you without much effort.
-		</p> 
+		</p>
 
 		<div id="device">
 			<h2>Device info</h2>
